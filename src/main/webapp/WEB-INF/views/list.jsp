@@ -22,7 +22,7 @@
 			<th>Date</th>
 		</tr>
 			<c:forEach var="l" items="${list}">
-				<tr>
+				<tr onclick="location.href='/detail/${l.bno}'">
 					<td>${l.bno}</td>
 					<td>${l.subject }</td>
 					<td>${l.writer }</td>
