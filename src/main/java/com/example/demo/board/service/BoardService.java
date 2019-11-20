@@ -45,5 +45,10 @@ public class BoardService {
 		
 		return mBoardMapper.fileInsert(file);
 	}
+	
+	public FileVO fileDetailService(int bno) throws Exception {
+		
+		return mBoardMapper.fileDetail(bno);
+	}
 
 }
