@@ -1,14 +1,21 @@
 package com.example.demo.board.controller;
 
+import java.io.File;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.board.domain.BoardVO;
+import com.example.demo.board.domain.FileVO;
 import com.example.demo.board.service.BoardService;
 
 @Controller
@@ -40,15 +47,43 @@ public class BoardController {
 	}
 	
 	@RequestMapping("insertProc")
-	private String boardInsertProc(HttpServletRequest request) throws Exception {
+	private String boardInsertProc(HttpServletRequest request, @RequestPart MultipartFile files) throws Exception {
 		
 		BoardVO board = new BoardVO();
+		FileVO file = new FileVO();
 		
 		board.setSubject(request.getParameter("subject"));
 		board.setContent(request.getParameter("content"));
 		board.setWriter(request.getParameter("writer"));
 		
-		mBoardService.boardInsertService(board);
+		if (files.isEmpty()) {
+			mBoardService.boardInsertService(board);
+		}
+		else {
+		
+			String sourceFileName = files.getOriginalFilename();
+			String sourceFileNameExtension = FilenameUtils.getExtension(sourceFileName);
+			File destinationFile;
+			String destinationFileName;
+			String fileUrl = "/Users/heesu/Documents/springspace/board/src/main/webapp/WEB-INF/uploadFiles/";
+			
+			do {
+				destinationFileName = RandomStringUtils.randomAlphanumeric(32) + "." + sourceFileNameExtension;
+				destinationFile = new File(fileUrl + destinationFileName);
+			} while(destinationFile.exists());
+			
+			destinationFile.getParentFile().mkdirs();
+			files.transferTo(destinationFile);
+			
+			mBoardService.boardInsertService(board);
+			
+			file.setBno(board.getBno());
+			file.setFileName(destinationFileName);
+			file.setFileOriName(files.getOriginalFilename());
+			file.setFileUrl(fileUrl);
+			
+			mBoardService.fileInsertService(file);
+		}
 		
 		return "redirect:/list";
 	}
@@ -62,11 +97,17 @@ public class BoardController {
 	}
 	
 	@RequestMapping("/updateProc")
-	private int boardUpdateProc(HttpServletRequest request) throws Exception {
+	private String boardUpdateProc(HttpServletRequest request) throws Exception {
 		
-		BoardVO board = (BoardVO) request.getParameterMap();
+		BoardVO board = new BoardVO();
 		
-		return mBoardService.boardUpdateService(board);
+		board.setSubject(request.getParameter("subject"));
+		board.setContent(request.getParameter("content"));
+		board.setBno(Integer.parseInt(request.getParameter("bno")));
+		
+		mBoardService.boardUpdateService(board);
+		
+		return "redirect:/detail/" + request.getParameter("bno");
 	}
 	
 	@RequestMapping("/delete/{bno}")

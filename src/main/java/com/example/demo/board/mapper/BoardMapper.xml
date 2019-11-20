@@ -24,10 +24,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			BNO = #{bno} 
 	</select>
 	
-	<insert id="boardInsert" parameterType="com.example.demo.board.domain.BoardVO">
+	<insert id="boardInsert" parameterType="com.example.demo.board.domain.BoardVO" useGeneratedKeys="true" keyProperty="bno">
 		INSERT INTO
 		BOARD (BNO, SUBJECT, CONTENT, WRITER, REG_DATE)
 		VALUES(#{bno}, #{subject}, #{content}, #{writer}, now()) 
+	</insert>
+	
+	<insert id="fileInsert" parameterType="com.example.demo.board.domain.FileVO">
+		INSERT INTO
+		FILES (FNO, BNO, FILENAME, FILEORINAME, FILEURL)
+		VALUES (#{fno}, #{bno}, #{fileName}, #{fileOriName}, #{fileUrl})
 	</insert>
 	
 	<update id="boardUpdate" parameterType="com.example.demo.board.domain.BoardVO">

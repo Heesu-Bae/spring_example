@@ -11,6 +11,10 @@
 
 <h2> 게시글 상세 </h2>
 
+<button class="btn btn-primary" onclick="location.href='/update/${detail.bno}'">수정</button>
+<button class="btn btn-danger" onclick="location.href='/delete/${detail.bno}'">삭제</button>
+
+
 <div class="container">
 	<form action="/insertProc" method="post">
 		<div class="form-group">

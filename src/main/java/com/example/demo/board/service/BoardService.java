@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.board.domain.BoardVO;
 import com.example.demo.board.mapper.BoardMapper;
+import com.example.demo.board.domain.FileVO;
 
 @Service("com.example.demo.board.service.BoardService")
 public class BoardService {
@@ -38,6 +39,11 @@ public class BoardService {
 	public int boardDeleteService(int bno) throws Exception {
 		
 		return mBoardMapper.boardDelete(bno);
+	}
+	
+	public int fileInsertService(FileVO file) throws Exception {
+		
+		return mBoardMapper.fileInsert(file);
 	}
 
 }
