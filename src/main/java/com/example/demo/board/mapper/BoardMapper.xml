@@ -43,7 +43,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE BNO = #{bno}
 	</update>
 	
-	<delete id="boardCount" parameterType="com.example.demo.board.domain.BoardVO">
+	<delete id="boardDelete" parameterType="com.example.demo.board.domain.BoardVO">
 		DELETE FROM BOARD WHERE BNO = #{bno}
 	</delete>
 	

@@ -18,11 +18,11 @@ public interface BoardMapper {
 	public BoardVO boardDetail(int bno) throws Exception;
 	
 	// 게시글 작성
-	public void boardInsert(BoardVO board) throws Exception;
+	public int boardInsert(BoardVO board) throws Exception;
 	
 	// 게시글 수정
-	public void boardUpdate(BoardVO board) throws Exception;
+	public int boardUpdate(BoardVO board) throws Exception;
 	
 	// 게시글 삭제
-	public void boardDelete(BoardVO board) throws Exception;
+	public int boardDelete(int bno) throws Exception;
 }
