@@ -8,5 +8,10 @@
 </head>
 <body>
 ${detail}
+
+
+
+
+<%@ include file="bootstrap.jsp" %>
 </body>
 </html>

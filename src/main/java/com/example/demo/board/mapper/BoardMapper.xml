@@ -26,7 +26,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<insert id="boardInsert" parameterType="com.example.demo.board.domain.BoardVO">
 		INSERT INTO
-		BOARD (BNO, SUBJECT, CONTENT, WRITTER, REG_DATE)
+		BOARD (BNO, SUBJECT, CONTENT, WRITER, REG_DATE)
 		VALUES(#{bno}, #{subject}, #{content}, #{writer}, now()) 
 	</insert>
 	
